@@ -37,6 +37,7 @@ const dotenv = require('dotenv').config()
 const minify = require('rollup-plugin-terser').terser
 const license = require('rollup-plugin-license')
 const os = require('os')
+const peerDepsExternal = require('rollup-plugin-peer-deps-external');
 const extensions = ['.js', '.ts']
 
 module.exports = {
@@ -46,6 +47,7 @@ module.exports = {
     }
   },
   plugins: [
+    peerDepsExternal(),
     json(),
     image(),
     inject({

@@ -35,6 +35,7 @@ const minify = require('rollup-plugin-terser').terser
 const license = require('rollup-plugin-license')
 const os = require('os')
 const extensions = ['.js', '.ts']
+const peerDepsExternal = require('rollup-plugin-peer-deps-external')
 
 module.exports = {
   onwarn(warning, warn) {
@@ -43,6 +44,7 @@ module.exports = {
     }
   },
   plugins: [
+    peerDepsExternal(),
     json(),
     image(),
     inject({
