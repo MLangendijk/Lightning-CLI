@@ -195,9 +195,15 @@ const bundleAppRollup = (folder, metadata, type, options) => {
     ? 'src/index.ts'
     : 'src/index.js'
 
+  let rollupConfig = path.join(__dirname, `../configs/rollup.${type}.config.js`)
+
+  if (fs.existsSync(path.join(process.cwd(), `configs/rollup.${type}.config.js`))) {
+    rollupConfig = path.join(process.cwd(), `configs/rollup.${type}.config.js`)
+  }
+
   const args = [
     '-c',
-    path.join(__dirname, `../configs/rollup.${type}.config.js`),
+    rollupConfig,
     '--input',
     path.join(process.cwd(), enterFile),
     '--file',
