@@ -24,7 +24,7 @@ const chalk = require('chalk')
 const buildHelpers = require('../helpers/build')
 
 const settingsFileName = buildHelpers.getSettingsFileName() // Get settings file name
-const regexp = new RegExp(`^(?!src|static|${settingsFileName}|metadata.json)(.+)$`)
+const regexp = new RegExp(`^(?!src|static|node_modules|${settingsFileName}|metadata.json)(.+)$`)
 
 let wss
 
@@ -50,13 +50,18 @@ module.exports = (initCallback, watchCallback) => {
   let busy = false
   return new Promise((resolve, reject) =>
     watch.watchTree(
-      './',
+      '../',
       {
         interval: 1,
         filter(f) {
-          return !!!regexp.test(f)
-        },
-        ignoreDirectoryPattern: /\.git|dist|build/,
+          if (f.includes('/build/')
+            || f.includes('/dist/')
+            || f.includes('.git')) {
+            return false;
+          }
+
+          return true;
+        }
       },
       (f, curr, prev) => {
         // prevent initiating another build when already busy
@@ -81,16 +86,16 @@ module.exports = (initCallback, watchCallback) => {
 
           // pass the 'type of change' based on the file that was changes
           let change
-          if (/^src/g.test(f)) {
+          if (/.*src/g.test(f)) {
             change = 'src'
           }
-          if (/^static/g.test(f)) {
+          if (/.*static/g.test(f)) {
             change = 'static'
           }
-          if (f === 'metadata.json') {
+          if (/.*metadata\.json/.test(f)) {
             change = 'metadata'
           }
-          if (f === settingsFileName) {
+          if ((new RegExp(`.*${settingsFileName}`, 'g')).test(f)) {
             change = 'settings'
           }
 
