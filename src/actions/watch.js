@@ -56,7 +56,7 @@ module.exports = (initCallback, watchCallback) => {
         filter(f) {
           return !!!regexp.test(f)
         },
-        ignoreDirectoryPattern: /node_modules|\.git|dist|build/,
+        ignoreDirectoryPattern: /\.git|dist|build/,
       },
       (f, curr, prev) => {
         // prevent initiating another build when already busy
