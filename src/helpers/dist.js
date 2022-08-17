@@ -95,6 +95,12 @@ const setupDistFolder = (folder, type, metadata) => {
     from: /\{\$APP_ID\}/g,
     to: buildHelpers.makeSafeAppId(metadata),
   })
+
+  replaceInFile.sync({
+    files: folder + '/*',
+    from: /\{\$CACHE_BUSTER\}/g,
+    to: new Date().getTime(),
+  })
 }
 
 const moveOldDistFolderToBuildFolder = () => {
