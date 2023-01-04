@@ -22,6 +22,7 @@ const watch = require('watch')
 const WebSocket = require('ws')
 const chalk = require('chalk')
 const buildHelpers = require('../helpers/build')
+const path = require('path')
 
 const settingsFileName = buildHelpers.getSettingsFileName() // Get settings file name
 const regexp = new RegExp(`^(?!src|static|node_modules|${settingsFileName}|metadata.json)(.+)$`)
@@ -46,6 +47,10 @@ const initWebSocketServer = () => {
   return server
 }
 
+const wrapWithSeparator = (folder) => {
+  return `${path.sep}${folder}${path.sep}`
+}
+
 module.exports = (initCallback, watchCallback) => {
   let busy = false
   return new Promise((resolve, reject) =>
@@ -54,9 +59,10 @@ module.exports = (initCallback, watchCallback) => {
       {
         interval: 1,
         filter(f) {
-          if (f.includes('/build/')
-            || f.includes('/dist/')
-            || f.includes('.git')) {
+          if (f.includes( wrapWithSeparator('build'))
+            || f.includes( wrapWithSeparator('dist'))
+            || f.includes('.git')
+            || f.includes('.bin')) {
             return false;
           }
 
