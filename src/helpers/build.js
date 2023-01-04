@@ -34,6 +34,8 @@ const findFile = (parent, filePath, depthCount = 0) => {
   if (depthCount >= depth) throw new Error('Required files not found at the given path')
 
   const fullPath = path.join(parent, filePath)
+
+  console.log(fullPath);
   if (fs.existsSync(fullPath)) {
     return fullPath
   }
