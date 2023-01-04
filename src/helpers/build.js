@@ -212,9 +212,9 @@ const bundleAppRollup = (folder, metadata, type, options) => {
 
   if (options.sourcemaps === false) args.push('--no-sourcemap')
 
-  const levelsDown = isLocallyInstalled()
+  const levelsDown = isLocallyInstalled() || true
     ? findFile(process.cwd(), 'node_modules/.bin/rollup')
-    : findFile(path.join(__dirname, '../..', 'node_modules/.bin/rollup'))
+    : path.join(__dirname, '../..', 'node_modules/.bin/rollup')
   process.env.LNG_BUILD_FAIL_ON_WARNINGS === 'true' ? args.push('--failAfterWarnings') : ''
   return execa(levelsDown, args)
     .then(() => {
