@@ -214,7 +214,7 @@ const bundleAppRollup = (folder, metadata, type, options) => {
 
   const levelsDown = isLocallyInstalled()
     ? findFile(process.cwd(), 'node_modules/.bin/rollup')
-    : path.join(__dirname, '../..', 'node_modules/.bin/rollup')
+    : findFile(path.join(__dirname, '../..', 'node_modules/.bin/rollup'))
   process.env.LNG_BUILD_FAIL_ON_WARNINGS === 'true' ? args.push('--failAfterWarnings') : ''
   return execa(levelsDown, args)
     .then(() => {

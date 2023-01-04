@@ -40,7 +40,7 @@ module.exports = () => {
 
       const levelsDown = isLocallyInstalled()
         ? buildHelpers.findFile(process.cwd(), 'node_modules/.bin/http-server')
-        : path.join(__dirname, '../..', 'node_modules/.bin/http-server')
+        : buildHelpers.findFile(path.join(__dirname, '../..', 'node_modules/.bin/http-server'))
 
       const subprocess = execa(levelsDown, args)
 
