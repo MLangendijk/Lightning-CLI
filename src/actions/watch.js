@@ -60,6 +60,8 @@ module.exports = (initCallback, watchCallback) => {
             return false;
           }
 
+          console.log(f);
+
           return true;
         }
       },
